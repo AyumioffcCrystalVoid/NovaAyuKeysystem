@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Get Key - NovaAyu (Stage 2)</title>
+  <style>
+	:root{
+	  --bg:#071227; --panel:#0f1720; --muted:#9aa7b2; --accent:#7c5cff; --glass:rgba(255,255,255,0.03);
+	}
+	html,body{height:100%;margin:0}
+	body{background:linear-gradient(180deg,#051028 0%,#071227 100%);color:#dce6ee;font-family:Inter,ui-sans-serif,system-ui,Arial;display:flex;align-items:center;justify-content:center;padding:40px}
+	.wrap{width:100%;max-width:1100px}
+	.userbox{border:1px solid rgba(125,170,255,0.06);padding:14px 18px;margin-bottom:18px;border-radius:6px;background:linear-gradient(180deg,rgba(255,255,255,0.01),transparent)}
+	.userbox h3{margin:0;font-size:16px}
+	.userbox p{margin:4px 0 0;color:var(--muted);font-size:13px}
+
+	.columns{display:flex;gap:18px}
+	.col{background:var(--panel);border-radius:10px;padding:20px;flex:1;border:1px solid rgba(255,255,255,0.02)}
+	.big{flex:2}
+
+	.card-title{font-weight:600;margin-bottom:12px}
+	.unlockr{background:linear-gradient(180deg,rgba(255,255,255,0.01),rgba(0,0,0,0.04));padding:24px;border-radius:12px;display:flex;flex-direction:column;align-items:center;gap:12px}
+	.btn{display:inline-block;padding:12px 18px;border-radius:10px;color:white;text-decoration:none}
+	.btn-google{background:white;color:#111;padding:10px 18px;border-radius:10px;display:flex;align-items:center;gap:10px}
+	.btn-trial{background:linear-gradient(90deg,var(--accent),#4b8bff);padding:8px 14px;border-radius:999px;color:white}
+
+	.redeem{margin-top:10px;width:100%}
+	.redeem input{width:100%;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);background:var(--glass);color:inherit}
+	.redeem .row{display:flex;gap:8px;margin-top:8px}
+	.muted{color:var(--muted);font-size:13px}
+
+	.tasks{margin-top:12px}
+	.task-item{background:linear-gradient(180deg,rgba(255,255,255,0.01),transparent);padding:14px;border-radius:8px;display:flex;align-items:center;justify-content:space-between;border:1px solid rgba(255,255,255,0.02);margin-top:10px}
+	.task-item .meta{display:flex;align-items:center;gap:12px}
+	.task-item .meta .dot{width:42px;height:42px;border-radius:8px;background:rgba(124,92,255,0.12);display:flex;align-items:center;justify-content:center}
+	.task-item .info{color:var(--muted)}
+
+	.claim-btn{width:100%;padding:14px;border-radius:10px;background:repeating-linear-gradient(45deg,#0b1220,#0b1220 10px,#0f1720 10px,#0f1720 20px);color:var(--muted);border:none;margin-top:12px}
+	.claim-btn.enabled{background:linear-gradient(90deg,var(--accent),#4b8bff);color:white}
+
+	.result{margin-top:12px;padding:12px;border-radius:8px;background:rgba(127,159,255,0.06);color:#cfe8ff}
+	.progress{height:8px;background:#0b1220;border-radius:6px;overflow:hidden}
+	.progress > i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),#4b8bff);width:0}
+
+	footer{margin-top:18px;color:var(--muted);text-align:center}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+	<div class="userbox">
+	  <h3>ACSU123</h3>
+	  <p>Use Unlockr or Complete Tasks to Continue</p>
+	</div>
+
+	<div class="columns">
+	  <div class="col big">
+		<div class="card-title">unlockr</div>
+		<div class="unlockr">
+		  <div style="font-size:14px;color:var(--muted)">Generate your unlock code</div>
+		  <div class="btn-trial">FREE 2-DAY TRIAL</div>
+		  <a class="btn-google" href="#" id="unlockrGoogle"><img src="https://www.google.com/favicon.ico" alt="g" style="width:18px;height:18px">Continue with Google</a>
+		  <div class="muted">OR</div>
+		  <a class="btn" id="useEmail" style="background:transparent;border:1px solid rgba(255,255,255,0.03)">Use email instead</a>
+
+		  <div style="margin-top:8px" class="muted">ALSO AVAILABLE ON</div>
+		  <div style="display:flex;gap:8px;margin-top:6px">
+			<a class="btn" style="background:#111;padding:8px 10px">App Store</a>
+			<a class="btn" style="background:#111;padding:8px 10px">Google Play</a>
+			<a class="btn" style="background:var(--accent);padding:8px 10px">Web App</a>
+		  </div>
+
+		  <div style="width:100%;margin-top:12px;border-top:1px solid rgba(255,255,255,0.02);padding-top:12px">
+			<a href="#redeem" style="color:#6fe1d6;text-decoration:none">🔑 REDEEM YOUR CODE HERE</a>
+		  </div>
+		</div>
+	  </div>
+
+	  <div class="col">
+		<div class="card-title">Complete Tasks to Continue</div>
+		<div class="tasks">
+		  <div class="task-item">
+			<div class="meta">
+			  <div class="dot">🎮</div>
+			  <div>
+				<div style="font-weight:600">BAIXE O MELHOR NAVEGADOR DE JOGOS</div>
+				<div class="info">Instale o Opera GX — ~60 sec</div>
+			  </div>
+			</div>
+			<div>
+			  <button id="startTask" class="btn" style="background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted)">Start</button>
+			</div>
+		  </div>
+
+		  <div style="margin-top:16px">
+			<div class="progress"><i id="progressBar"></i></div>
+			<div id="taskStatus" class="muted" style="margin-top:8px">Task not started</div>
+			<button id="claimReward" class="claim-btn" disabled>🔒 CLAIM REWARD</button>
+			<div id="rewardResult" class="result" style="display:none"></div>
+		  </div>
+		</div>
+	  </div>
+	</div>
+
+	<div id="redeem" style="margin-top:18px" class="col">
+	  <div style="font-weight:600">Redeem / Enter mission code</div>
+	  <div class="redeem">
+		<input id="redeemCode" placeholder="Enter mission code" />
+		<div class="row">
+		  <button id="redeemBtn" class="btn" style="background:var(--accent)">Redeem</button>
+		  <div style="flex:1" class="muted">Or complete tasks to get a key</div>
+		</div>
+		<div id="redeemResult" class="result" style="display:none"></div>
+	  </div>
+	</div>
+
+	<footer>OR</footer>
+  </div>
+
+  <script>
+	// Gera key aleatória forma XXXX-XXXX-XXXX-XXXX
+	function randomKey(groupCount = 4, groupSize = 4) {
+	  const chars = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789';
+	  const groups = [];
+	  for (let g = 0; g < groupCount; g++) {
+		let part = '';
+		for (let i = 0; i < groupSize; i++) {
+		  part += chars.charAt(Math.floor(Math.random() * chars.length));
+		}
+		groups.push(part);
+	  }
+	  return groups.join('-');
+	}
+
+	document.getElementById('unlockrGoogle').addEventListener('click', function(e){
+	  e.preventDefault();
+	  window.open('https://unlockr.app', '_blank');
+	});
+
+	// Redeem flow
+	document.getElementById('redeemBtn').addEventListener('click', async function(){
+	  const code = document.getElementById('redeemCode').value.trim();
+	  const out = document.getElementById('redeemResult');
+	  out.style.display = 'block';
+	  if(code === 'MISSION-COMPLETE'){
+		const key = randomKey();
+		out.textContent = 'Success! Your key: ' + key + ' (copied to clipboard)';
+		try { await navigator.clipboard.writeText(key); } catch(e){}
+	  } else {
+		out.textContent = 'Invalid mission code.';
+		out.style.color = '#ff8b8b';
+	  }
+	});
+
+	// Task simulation
+	let taskRunning = false;
+	let taskProgress = 0;
+	document.getElementById('startTask').addEventListener('click', function(){
+	  if(taskRunning) return;
+	  taskRunning = true;
+	  taskProgress = 0;
+	  const status = document.getElementById('taskStatus');
+	  const bar = document.getElementById('progressBar');
+	  const claim = document.getElementById('claimReward');
+	  status.textContent = 'Task in progress...';
+	  const t = setInterval(function(){
+		taskProgress += 1; // 1% per interval
+		bar.style.width = taskProgress + '%';
+		if(taskProgress >= 100){
+		  clearInterval(t);
+		  taskRunning = false;
+		  status.textContent = 'Task completed! You can claim the reward.';
+		  claim.disabled = false;
+		  claim.classList.add('enabled');
+		  claim.textContent = '🔓 CLAIM REWARD';
+		}
+	  }, 600); // ~60s total
+	});
+
+	document.getElementById('claimReward').addEventListener('click', async function(){
+	  if(this.disabled) return;
+	  const key = randomKey();
+	  const out = document.getElementById('rewardResult');
+	  out.style.display = 'block';
+	  out.textContent = 'Your generated key: ' + key + ' (copied)';
+	  try { await navigator.clipboard.writeText(key); } catch(e){}
+	  this.disabled = true;
+	  this.classList.remove('enabled');
+	});
+  </script>
+</body>
+</html>
