@@ -1,217 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CrystalVoid | Downloads</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
-
-    <style>
-        :root {
-            --primary: #00f2ff;
-            --secondary: #7000ff;
-            --accent: #ff00c8;
-            --bg-dark: #050505;
-            --glass: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.1);
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
-
-        body {
-            background-color: var(--bg-dark);
-            color: white;
-            min-height: 100vh;
-            overflow-x: hidden;
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(112, 0, 255, 0.15) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(0, 242, 255, 0.1) 0%, transparent 40%);
-        }
-
-        /* Efeito de Ruído */
-        body::before {
-            content: "";
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: url('https://grainy-gradients.vercel.app/noise.svg');
-            opacity: 0.05; pointer-events: none; z-index: 1;
-        }
-
-        .container { max-width: 1200px; margin: 0 auto; padding: 4rem 1.5rem; position: relative; z-index: 2; }
-
-        header { text-align: center; margin-bottom: 5rem; }
-        
-        .logo-area h1 { 
-            font-family: 'Space Grotesk', sans-serif; 
-            font-size: clamp(2.5rem, 8vw, 4.5rem); letter-spacing: -2px; line-height: 1;
-        }
-
-        .highlight { 
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 15px rgba(0, 242, 255, 0.4));
-        }
-
-        .status-pill {
-            display: inline-flex; align-items: center; gap: 8px;
-            background: rgba(0, 242, 255, 0.05); color: var(--primary);
-            padding: 8px 20px; border-radius: 50px; font-size: 0.75rem; font-weight: 900;
-            border: 1px solid rgba(0, 242, 255, 0.2); margin-top: 25px;
-            text-transform: uppercase; letter-spacing: 1px;
-        }
-
-        .dot { width: 8px; height: 8px; background: var(--primary); border-radius: 50%; box-shadow: 0 0 10px var(--primary); animation: pulse 2s infinite; }
-
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
-
-        /* Grid de Downloads */
-        .download-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            perspective: 1000px;
-        }
-
-        .download-card {
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            padding: 2.5rem;
-            backdrop-filter: blur(12px);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .download-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            border-color: var(--primary);
-            background: rgba(255, 255, 255, 0.05);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-        }
-
-        .card-icon {
-            width: 60px;
-            height: 60px;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            margin-bottom: 1.5rem;
-            color: var(--primary);
-            border: 1px solid var(--glass-border);
-        }
-
-        .download-card h3 {
-            font-size: 1.5rem;
-            font-weight: 800;
-            margin-bottom: 0.8rem;
-            background: linear-gradient(to right, #fff, #888);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        }
-
-        .download-card p {
-            color: #94a3b8;
-            font-size: 0.95rem;
-            line-height: 1.6;
-            margin-bottom: 2rem;
-        }
-
-        .btn-download {
-            width: 100%;
-            padding: 16px;
-            border-radius: 14px;
-            border: none;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            font-weight: 900;
-            text-decoration: none;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 12px;
-            transition: 0.3s;
-            cursor: pointer;
-            text-transform: uppercase;
-            font-size: 0.85rem;
-            letter-spacing: 1px;
-            margin-top: auto;
-        }
-
-        .btn-download:hover {
-            filter: brightness(1.2);
-            box-shadow: 0 0 25px rgba(0, 242, 255, 0.4);
-            transform: scale(1.02);
-        }
-
-        footer {
-            margin-top: 6rem;
-            text-align: center;
-            color: #444;
-            padding: 2rem;
-            font-weight: 700;
-            font-size: 0.8rem;
-            letter-spacing: 1px;
-        }
-
-        @media (max-width: 768px) {
-            .container { padding: 2rem 1rem; }
-            .download-grid { grid-template-columns: 1fr; }
-        }
-    </style>
+	<meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Get Key - NovaAyu</title>
+  <style>
+	body { background:#0b0e12; color:#cfd8e3; font-family:Inter, Arial, sans-serif; display:flex; align-items:center; justify-content:center; height:100vh; margin:0 }
+	.card { background:#0f1418; padding:28px; border-radius:12px; width:420px; box-shadow:0 8px 30px rgba(0,0,0,0.6) }
+	a.button { display:inline-block; background:#2563eb; color:white; padding:12px 16px; border-radius:8px; text-decoration:none }
+  </style>
 </head>
 <body>
-
-    <div class="container">
-        <header>
-            <div class="logo-area">
-                <h1>Crystal<span class="highlight">Void </span></h1>
-                <div class="status-pill">
-                    <span class="dot"></span> <span>Download Center/span>
-                </div>
-            </div>
-        </header>
-
-        <main class="download-grid">
-            
-            <div class="download-card">
-                <div class="card-icon"><i class="ph-bold ph-desktop"></i></div>
-                <h3>Genesis Elite Executor(old) or Simple Executor</h3>
-                <p>a old Genesis Elite Executor</p>
-                <a href="https://www.mediafire.com/file/qx2hgdjbq6z6jc9/Simple+Executor.rar/file" class="btn-download">
-                    DOWNLOAD NOW <i class="ph-bold ph-download-simple"></i>
-                </a>
-            </div>
-                        <div class="download-card">
-                <div class="card-icon"><i class="ph-bold ph-desktop"></i></div>
-                <h3>Genesis Elite Executor(new) or Simple Executor</h3>
-                <p>New Version of Geneis Elite or Simple Executor</p>
-                <a href="https://www.mediafire.com/file/f5lagdcfxy0rzu9/Simple+Executor(new).zip/file" class="btn-download">
-                    DOWNLOAD NOW <i class="ph-bold ph-download-simple"></i>
-                </a>
-            </div>
-
-        </main>
-
-        <footer>
-            © 2026 CRYSTALVOID HUB - ALL RIGHTS RESERVED
-        </footer>
-    </div>
-
+  <div class="card">
+	<h2>Stage 1 — Mission</h2>
+	<p>To get the key, you must complete a quick mission. Click the button below to continue.</p>
+	<p><a class="button" id="startBtn" href="https://lootlabs.gg" target="_blank">Start mission</a></p>
+	<p style="margin-top:18px">After completing the mission, return here and click <strong>Next</strong>.</p>
+	<p style="text-align:right"><a class="button" id="nextBtn" href="KeyGive.html">Next →</a></p>
+  </div>
+  <script src="app.js"></script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
