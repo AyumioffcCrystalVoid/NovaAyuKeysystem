@@ -1,145 +1,54 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Claim License - NovaAyu</title>
+  <title>Gerador de Chave - NovaAyu</title>
   <style>
-	body{margin:0;font-family:Inter,Arial;background:#071227;color:#e6f0fb;display:flex;align-items:center;justify-content:center;height:100vh}
-	.box{width:960px;max-width:96%;background:linear-gradient(180deg,#0b1624 0%,#081021 100%);border:1px solid rgba(255,255,255,0.03);padding:28px;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.6)}
-	.row{display:flex;gap:18px}
-	.col{flex:1}
-	h1{margin:0 0 8px 0;font-size:20px}
-	p{margin:0;color:#9fb0c9}
-	.panel{background:linear-gradient(180deg,rgba(255,255,255,0.01),transparent);padding:18px;border-radius:10px;margin-top:12px}
-	.btn{display:inline-block;padding:10px 16px;border-radius:8px;background:#3b82f6;color:white;text-decoration:none}
-	.ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);color:#9fb0c9}
-	input{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:rgba(255,255,255,0.01);color:inherit}
-	.progress{height:10px;background:#081018;border-radius:6px;overflow:hidden;margin-top:10px}
-	.progbar{height:100%;background:linear-gradient(90deg,#7c5cff,#4b8bff);width:0}
-	.result{margin-top:12px;padding:10px;border-radius:8px;background:rgba(127,159,255,0.04)}
-	.footer{margin-top:14px;text-align:center;color:#89a3bf}
+	body{height:100vh;margin:0;display:flex;align-items:center;justify-content:center;font-family:Inter,Arial;background:#071227;color:#e6f0fb}
+	.card{padding:24px;border-radius:10px;background:#081424;border:1px solid rgba(255,255,255,0.03);text-align:center;width:360px}
+	h1{font-size:18px;margin:0 0 12px}
+	.key{font-family:monospace;background:rgba(255,255,255,0.02);padding:10px;border-radius:6px;margin:12px 0}
+	button{padding:8px 12px;border-radius:8px;border:0;background:#3b82f6;color:#fff;cursor:pointer}
+	a{color:#9fb0c9;text-decoration:none;margin-left:8px}
   </style>
 </head>
 <body>
-  <div class="box">
-	<div class="row">
-	  <div class="col">
-		<h1>Get your NovaAyu License</h1>
-		<p>Complete a mission or enter a mission code to receive your license key.</p>
-
-		<div class="panel">
-		  <h3 style="margin:0 0 8px 0">Provider</h3>
-		  <p style="margin-bottom:10px;color:#9fb0c9">Open the mission provider site and follow the steps. When finished, use the redeem form below.</p>
-		  <a id="openProvider" class="btn" href="#">Open Mission Site</a>
-		</div>
-
-		<div class="panel">
-		  <h3 style="margin:0 0 8px 0">Or complete a quick task</h3>
-		  <p class="muted">Simulated task — takes ~20 seconds</p>
-		  <div style="display:flex;gap:8px;margin-top:12px">
-			<button id="startTask" class="ghost">Start Task</button>
-			<button id="claimReward" class="btn" disabled="disabled">Claim Reward</button>
-		  </div>
-		  <div class="progress"><div id="bar" class="progbar"></div></div>
-		  <div id="taskInfo" style="margin-top:8px;color:#9fb0c9">Task not started</div>
-		</div>
-	  </div>
-
-	  <div class="col">
-		<h1>Redeem</h1>
-		<p>Enter the mission code you received from the provider, or paste the key you were given.</p>
-
-		<div class="panel">
-		  <label for="missionCode">Mission code</label>
-		  <input id="missionCode" placeholder="Enter mission code or paste key" />
-		  <div style="display:flex;gap:8px;margin-top:12px">
-			<button id="redeemBtn" class="btn">Redeem</button>
-			<button id="pasteBtn" class="ghost">Paste from clipboard</button>
-		  </div>
-		  <div id="redeemResult" class="result" style="display:none"></div>
-		</div>
-
-		<div class="panel" style="margin-top:12px">
-		  <h3 style="margin:0">Generated Key</h3>
-		  <div id="generated" style="margin-top:8px;color:#cfe8ff">—</div>
-		  <div style="display:flex;gap:8px;margin-top:12px">
-			<button id="copyKey" class="btn" disabled="disabled">Copy key</button>
-			<button id="useKey" class="ghost" disabled="disabled">Use in app</button>
-		  </div>
-		</div>
-	  </div>
+  <div class="card">
+	<h1>Gerador de Chave NovaAyu</h1>
+	<div id="generated" class="key">—</div>
+	<div>
+	  <button id="gen">Gerar chave</button>
+	  <button id="copy" style="margin-left:8px" disabled>Copiar</button>
+	  <a id="site" href="https://novaayu.gg" target="_blank">Abrir site</a>
 	</div>
-	<div class="footer">Provider URL is configurable. This page is standalone and does not copy any external provider site.</div>
   </div>
 
   <script>
-  //<![CDATA[
-	const providerUrl = 'https://example-provider.com/mission'; // substitua pela URL desejada
-
-	function randomKey(){
-	  const chars = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789';
-	  const groups = [];
-	  for(let g=0;g<4;g++){
-		let part='';
-		for(let i=0;i<4;i++) part+=chars.charAt(Math.floor(Math.random()*chars.length));
-		groups.push(part);
+	function generateKey(){
+	  const parts = [];
+	  for(let i=0;i<4;i++){
+		const n = Math.floor(Math.random()*1000); // 0..999
+		parts.push(String(n).padStart(3,'0'));
 	  }
-	  return groups.join('-');
+	  return parts.join('-'); // formato 000-000-000-000
 	}
 
-	document.getElementById('openProvider').addEventListener('click', function(e){
-	  e.preventDefault();
-	  window.open(providerUrl,'_blank');
+	const genBtn = document.getElementById('gen');
+	const copyBtn = document.getElementById('copy');
+	const out = document.getElementById('generated');
+
+	genBtn.addEventListener('click', async ()=>{
+	  const k = generateKey();
+	  out.textContent = k;
+	  copyBtn.disabled = false;
+	  try{ await navigator.clipboard.writeText(k);}catch(e){}
 	});
 
-	// Task simulation
-	let prog = 0; let taskTimer = null;
-	document.getElementById('startTask').addEventListener('click', function(){
-	  if(taskTimer) return;
-	  prog=0; document.getElementById('bar').style.width='0%'; document.getElementById('taskInfo').textContent='Task in progress...';
-	  taskTimer = setInterval(()=>{
-		prog+=2; document.getElementById('bar').style.width = prog + '%';
-		if(prog>=100){ clearInterval(taskTimer); taskTimer=null; document.getElementById('taskInfo').textContent='Task complete — claim your reward.'; document.getElementById('claimReward').disabled=false; }
-	  },400);
+	copyBtn.addEventListener('click', async ()=>{
+	  const k = out.textContent.trim(); if(!k || k==='—') return;
+	  try{ await navigator.clipboard.writeText(k); copyBtn.textContent='Copiado'; setTimeout(()=>copyBtn.textContent='Copiar',1500);}catch(e){}
 	});
-
-	document.getElementById('claimReward').addEventListener('click', async function(){
-	  const key = randomKey();
-	  document.getElementById('generated').textContent = key;
-	  document.getElementById('copyKey').disabled = false; document.getElementById('useKey').disabled=false;
-	  document.getElementById('redeemResult').style.display='block'; document.getElementById('redeemResult').textContent='Reward generated — key copied to clipboard.';
-	  try{ await navigator.clipboard.writeText(key); }catch(e){}
-	  this.disabled=true;
-	});
-
-	// Redeem by code
-	document.getElementById('redeemBtn').addEventListener('click', async function(){
-	  const code = document.getElementById('missionCode').value.trim();
-	  const out = document.getElementById('redeemResult'); out.style.display='block'; out.style.color='';
-	  if(code==='MISSION-COMPLETE'){
-		const key = randomKey(); document.getElementById('generated').textContent=key; out.textContent='Success! Key generated and copied.'; try{ await navigator.clipboard.writeText(key);}catch(e){}
-		document.getElementById('copyKey').disabled=false; document.getElementById('useKey').disabled=false;
-	  } else if(code.length>=16){ // se usuário colar key diretamente
-		document.getElementById('generated').textContent = code; out.textContent='Key detected — ready to use.'; document.getElementById('copyKey').disabled=false; document.getElementById('useKey').disabled=false;
-	  } else { out.textContent='Invalid code.'; out.style.color='#ff8b8b'; }
-	});
-
-	document.getElementById('pasteBtn').addEventListener('click', async function(){
-	  try{ const txt = await navigator.clipboard.readText(); document.getElementById('missionCode').value = txt; }catch(e){}
-	});
-
-	document.getElementById('copyKey').addEventListener('click', async function(){
-	  const key = document.getElementById('generated').textContent.trim(); if(!key || key==='—') return;
-	  try{ await navigator.clipboard.writeText(key); this.textContent='Copied'; setTimeout(()=> this.textContent='Copy key',1500); }catch(e){}
-	});
-
-	// Use in app just copies key to clipboard (app can paste)
-	document.getElementById('useKey').addEventListener('click', async function(){
-	  const key = document.getElementById('generated').textContent.trim(); if(!key || key==='—') return;
-	  try{ await navigator.clipboard.writeText(key); alert('Key copied to clipboard. Return to NovaAyu and paste it.'); }catch(e){}
-	});
-  //]]>
   </script>
 </body>
 </html>
